@@ -1,16 +1,16 @@
 {
-    "name": "fran/teste-php",
-    "description": "Sistema Simples de Gestão Escolar",
-    "autoload": {
-        "psr-4": {
-            "Fran\\TestePhp\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "francivaldo4334",
-            "email": "francivaldodev@gmail.com"
-        }
-    ],
-    "require": {}
+  "name": "fran/teste-php",
+  "description": "Sistema Simples de Gestão Escolar",
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  },
+  "authors": [
+    {
+      "name": "francivaldo4334",
+      "email": "francivaldodev@gmail.com"
+    }
+  ],
+  "require": {}
 }
