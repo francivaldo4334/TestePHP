@@ -26,7 +26,7 @@ class Router {
             $uri = $request->getUri();
 
             if (isset($this->routers[$uri][$method])) {
-                $response = $this->routers[$uri][$method]();
+                $response = $this->routers[$uri][$method]($request);
                 if ($response instanceof Response) {
                     return $response;
                 }
