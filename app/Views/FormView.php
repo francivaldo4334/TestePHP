@@ -7,6 +7,8 @@ class FormView extends View {
         $inputs = [],
         $selects = [],
         $actions = [],
+        $method = "",
+        $action = "/",
     )
     {
     	return parent::render('components/form', [
@@ -17,6 +19,8 @@ class FormView extends View {
 	            'components/label',
                 array_map(fn($item) => ['label' => $item['label'], 'content' => View::render('components/select', $item)], $selects)
            ) . ListView::render('components/button', $actions),
+           'method' => $method,
+           'action' => $action,
 	    ]);
     }
 }

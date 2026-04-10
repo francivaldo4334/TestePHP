@@ -70,7 +70,9 @@ class AlunosView extends View {
                         'class' => 'btn-primary',
                         'content' => "Salvar",
                     ]
-                ]
+                ],
+                "POST",
+                "/alunos"
             ),
         ], 'alunos');
     }
