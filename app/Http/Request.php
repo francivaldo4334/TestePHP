@@ -27,5 +27,7 @@ class Request {
     public function getBody(){
         return $this->body;
     }
-
+    public function getParams(){
+        return $this->params;
+    }
 }

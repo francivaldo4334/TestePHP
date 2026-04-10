@@ -24,11 +24,11 @@ class TableView extends View {
                                     'onclick' => "
                                         if (confirm('Deseja excluir?')) {
                                             const tr = this.closest('tr');
-                                            fetch(window.location.href, { method: 'DELETE' })
+                                            const id = '" . $item->getId() . "';
+                                            fetch(window.location.href + '?id=' + id, { method: 'DELETE' })
                                             .then(res => res.ok ? tr.remove() : alert('Erro ao excluir no servidor.'));
                                         }
                                     ",
-                                    'attrs' => 'data-id="'.($item['id'] ?? '').'"',
                                 ])],
                             ]),
                         ) 
