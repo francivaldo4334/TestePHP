@@ -5,7 +5,8 @@ namespace App\Models\Database;
 use PDO;
 use PDOException;
 
-class Database {
+class Database
+{
     private static $instance = null;
     private $pdo = null;
     public function __construct()
@@ -13,10 +14,13 @@ class Database {
         $c = require_once __DIR__ . '/../../../config/database.php';
         $dsn = "{$c['driver']}:host={$c['host']};dbname={$c['database']};charset={$c['charset']}";
         $this->pdo = new PDO($dsn, $c['username'], $c['password'], $c['options']);
+
+        $createTablesSchema = $this->getScritpSql('schema');
+        $this->pdo->exec($createTablesSchema);
     }
     public static function getConnection()
     {
-    	if (!self::$instance) {
+        if (!self::$instance) {
             try {
                 self::$instance = new Database();
             } catch (PDOException $e) {
@@ -25,16 +29,24 @@ class Database {
         }
         return self::$instance;
     }
-    public function select($sql): array
+    public function select($sql, $params = []): array
     {
-    	return [];
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
     }
     public function insert($sql, $model): mixed
     {
-    	return [];
-        }
-    public function delete($sql)
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute($model);
+    }
+    public function delete($sql, $params = [])
     {
-    	
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute($params);
+    }
+    public function getScritpSql($path){        
+       $file = __DIR__.'/../../../scripts/sql/'.$path.'.sql'; 
+       return file_exists($file) ? file_get_contents($file): '';
     }
 }
