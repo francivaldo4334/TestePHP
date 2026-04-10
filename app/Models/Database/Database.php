@@ -5,7 +5,7 @@ namespace App\Models\Database;
 use PDO;
 use PDOException;
 
-class DatabaseMysql {
+class Database {
     private static $instance = null;
     private $pdo = null;
     public function __construct()
@@ -20,7 +20,7 @@ class DatabaseMysql {
     {
     	if (!self::$instance) {
             try {
-                self::$instance = new DatabaseMysql();
+                self::$instance = new Database();
             } catch (PDOException $e) {
                 die("Erro na conexão: " . $e->getMessage());
             }
