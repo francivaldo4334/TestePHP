@@ -28,7 +28,7 @@ class TableView extends View {
                                             .then(res => res.ok ? tr.remove() : alert('Erro ao excluir no servidor.'));
                                         }
                                     ",
-                                    'attrs' => 'data-id="'.$item['id'].'"',
+                                    'attrs' => 'data-id="'.($item['id'] ?? '').'"',
                                 ])],
                             ]),
                         ) 
