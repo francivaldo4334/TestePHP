@@ -24,5 +24,8 @@ class Request {
     public function getUri():string {
         return $this->uri;
     }
+    public function getBody(){
+        return $this->body;
+    }
 
 }

@@ -29,11 +29,11 @@ class Database
         }
         return self::$instance;
     }
-    public function select($sql, $params = []): array
+    public function select($sql, $params = [], $entityClass = null): array
     {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_CLASS, $entityClass);
     }
     public function insert($sql, $model): mixed
     {

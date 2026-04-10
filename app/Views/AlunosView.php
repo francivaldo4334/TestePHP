@@ -2,8 +2,14 @@
 
 namespace App\Views;
 
+use App\Models\Entities\AlunoEntity;
+
 class AlunosView extends View {
-    public static function render($view, $vars = []) {
+    /**
+    * @param array<AlunoEntity> $items
+    **/
+    public static function render($view, $items = []) {
+
         return SidebarLayoutView::render('layouts/crud', [
             'btn_create'=> View::render('components/button', [
                 'content'=>'Adcionar Aluno',
@@ -17,19 +23,12 @@ class AlunosView extends View {
                     ['title' => 'Dt/Criação'], 
                     ['title' => 'Turma'], 
                 ],
-                [
-                    [
-                       'name' => 'Francivaldo',
-                       'email' => "francivaldodev@gmail.com",
-                       'create_at' => '2025-01-02',
-                       'class_name' => 'Ads' 
-                    ],
-                ],
+                $items,
                 fn($item) => [
-                    ['data' => $item['name']],
-                    ['data' => $item['email']],
-                    ['data' => $item['create_at']],
-                    ['data' => $item['class_name']],
+                    ['data' => $item->getNome()],
+                    ['data' => $item->getEmail()],
+                    ['data' => $item->getCriadoEm()],
+                    ['data' => $item->getNomeDaTurma()],
                 ],
             ),
             'form_create_content'=> FormView::render(
@@ -39,6 +38,7 @@ class AlunosView extends View {
                        'value' => '',
                        'label' => 'Nome',
                        'name' => 'name',
+                       'attrs' => 'required',
                    ],
                    [
                        'placeholder' => 'E-mail do aluno',
@@ -46,17 +46,21 @@ class AlunosView extends View {
                        'label' => 'Email',
                        'type' => 'email',
                        'name' => 'email',
+                       'attrs' => 'required',
                    ],
                 ],
                 [
                    [
                       'label' => "Turma",
+                      'name' => "turma_id",
                       'options' => ListView::render('components/option', [
                               [
-                                  'label' => "Item 1",
-                                  'value' => 0,
+                                  'label' => "Selecione um item",
+                                  'value' => '',
+                                  'attrs' => "selected"
                               ]
-                      ])
+                      ]),
+                      'attrs' => 'required',
                    ] 
                 ],
                 [
