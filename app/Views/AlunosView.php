@@ -59,7 +59,18 @@ class AlunosView extends View {
                       ])
                    ] 
                 ],
-                []
+                [
+                    [
+                        'type' => 'reset',
+                        'content' => "Cancelar",
+                        'onclick' => 'id_modal_create.close()'
+                    ],
+                    [
+                        'type' => 'submit',
+                        'class' => 'btn-primary',
+                        'content' => "Salvar",
+                    ]
+                ]
             ),
         ], 'alunos');
     }
