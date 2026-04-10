@@ -10,10 +10,8 @@ class Database {
     private $pdo = null;
     public function __construct()
     {
-        $configPath = __DIR__ . '/../../config/database.php';        
-        $c = require $configPath;
+        $c = require_once __DIR__ . '/../../../config/database.php';
         $dsn = "{$c['driver']}:host={$c['host']};dbname={$c['database']};charset={$c['charset']}";
-        
         $this->pdo = new PDO($dsn, $c['username'], $c['password'], $c['options']);
     }
     public static function getConnection()
