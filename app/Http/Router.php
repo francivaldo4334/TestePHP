@@ -18,6 +18,17 @@ class Router {
     public function get($uri, $closure) {
         $this->addRouter('GET', $uri, $closure);
     }
+    public function post($uri, $closure) {
+        $this->addRouter('POST', $uri, $closure);
+    }
+    public function delete($uri, $closure) {
+        $this->addRouter('DELETE', $uri, $closure);
+    }
+    public function registerCrud($uri, $controller){
+        $this->get($uri, $controller::toRouter());
+        $this->post($uri, $controller::toRouter());
+        $this->delete($uri, $controller::toRouter()); 
+    }
 
     private function getRouter(){
         try {
