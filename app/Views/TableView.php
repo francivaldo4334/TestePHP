@@ -11,7 +11,7 @@ class TableView extends View {
     ) {
         $renderDatas = $renderDatas ?? fn($item) => [];
         return parent::render('components/table', [
-            'style'=>$style,
+            'attrs'=>!empty($style) ? 'style="'.$style.'"' : '',
             'table_headers' => ListView::render('components/table-header', $tableHeaders),
             'table_rows'    => ListView::render(
                 'components/table-row',

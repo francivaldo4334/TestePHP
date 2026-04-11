@@ -8,8 +8,10 @@ use App\Models\Database\Repositories\AlunoRepository;
 use App\Models\Database\Repositories\DashboardRepository;
 use App\Models\Database\Repositories\TurmaRepository;
 use App\Models\Entities\AlunoEntity;
+use App\Utils\DocxGenerator;
 use App\Utils\PdfGenerator;
 use App\Views\DashboardView;
+use App\Views\ReportDocxView;
 use App\Views\ReportPdfView;
 
 class DashboardController extends Controller {
@@ -27,10 +29,22 @@ class DashboardController extends Controller {
         $turmas = $this->repositoryTurmas->list();
         return new Response(DashboardView::render('', $items, $turmas, $params));
     }
+    public function generateReportDocx(Request $request): Response {
+        $notas = $this->repository->list();
+        $alunos = $this->repositoryAlunos->list();
+        $html = ReportDocxView::render(notas:$notas, alunos:$alunos);
+        $docxGenerator = new DocxGenerator();
+        $docx = $docxGenerator->generateByHtml($html);
+
+        $response = new Response($docx);
+        $response->setContentType('application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        $response->addHeader('Content-Disposition', 'attachment; filename="relatorio.docx"');
+        return $response;
+    }
     public function generateReportPdf(Request $request): Response {
         $notas = $this->repository->list();
         $alunos = $this->repositoryAlunos->list();
-        $html = ReportPdfView::render($notas, $alunos);
+        $html = ReportPdfView::render(notas:$notas, alunos:$alunos);
 
         $pdfGenerator = new PdfGenerator();
         $pdf = $pdfGenerator->generateByHtml($html);

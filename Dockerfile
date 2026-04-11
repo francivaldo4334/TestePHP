@@ -6,10 +6,12 @@ RUN apt-get update && apt-get install -y \
     libfontconfig1 \
     libxext6 \
     unzip \
-    curl
+    curl \
+    libzip-dev \
+    libxml2-dev
 
 # Instala extensões do PHP
-RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install pdo_mysql zip
 
 # Copia o Composer de forma segura
 # Se o --from falhar, usamos o método direto

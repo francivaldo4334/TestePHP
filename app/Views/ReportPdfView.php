@@ -2,42 +2,9 @@
 
 namespace App\Views;
 
-use App\Models\Entities\AlunoEntity;
-use App\Models\Proxys\DashboardProxy;
-
-class ReportPdfView extends View {
-    public static function render($notas = [], $alunos=[])
+class ReportPdfView extends ReportView{
+    public static function render($view = 'report_templates/report_pdf', $notas = [], $alunos=[], $style="width:100%;")
     {
-        return parent::render('report_templates/report', [
-            'nome_escola'=> "Nome da Escola",
-            'table_notas'=> TableView::render(
-                [
-                    ['title'=>'Disciplina'],
-                    ['title'=>'Aluno'],
-                    ['title'=>'Data/Lançamento'],
-                    ['title'=>'Nota'],
-                ],
-                $notas,
-                fn(DashboardProxy $item)=>[
-                    ['data'=>$item->getDisciplina()],
-                    ['data'=>$item->getNomeDoAluno()],
-                    ['data'=>$item->getDataLancamento()],
-                    ['data'=>$item->getNota()],
-                ],
-                'width:100%'
-            ),
-            'table_media_aluno'=> TableView::render(
-                [
-                    ['title' => 'Aluno'],
-                    ['title' => 'Media'],
-                ],
-                $alunos,
-                fn(AlunoEntity $item)=>[
-                    ['data' => $item->getNome()],
-                    ['data' => $item->getMediaDoAluno()],
-                ],
-                'width:100%'
-            ),
-        ]);
+        return parent::render($view, $notas, $alunos, $style);
     }
 }

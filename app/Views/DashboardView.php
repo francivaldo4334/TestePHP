@@ -15,7 +15,13 @@ class DashboardView extends View {
                     'download'=>'relatorio.pdf',
                     'class'=>'btn',
                     'content'=>'Gerar Relatório/PDF'
-                ]
+                ],
+                [
+                    'href'=>'reports/docx',
+                    'download'=>'relatorio.docx',
+                    'class'=>'btn',
+                    'content'=>'Gerar Relatório/DOCX'
+                ],
             ]),
             'table'=>TableView::render(
                 [

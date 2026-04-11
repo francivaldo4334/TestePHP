@@ -40,6 +40,9 @@ class Response {
             case 'application/pdf':
                 echo $this->content;
                 exit;
+            case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                echo $this->content;
+                exit;
         }
     }
 }
