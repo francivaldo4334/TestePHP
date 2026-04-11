@@ -16,7 +16,7 @@ class TurmasView extends View {
                 'class'=> 'btn-primary',
                 'onclick'=>'id_modal_create.showModal()'
             ]),
-            'list_content' => TableView::render(
+            'list_content' => TableWithDeleteActionView::render(
                 [
                     ['title' => 'Nome'], 
                     ['title' => 'Ano'], 

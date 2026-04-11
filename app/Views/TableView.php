@@ -10,35 +10,14 @@ class TableView extends View {
     ) {
         $renderDatas = $renderDatas ?? fn($item) => [];
         return parent::render('components/table', [
-            'table_headers' => ListView::render('components/table-header', $tableHeaders) . View::render('components/table-header', ['title'=> 'Ações']),
+            'table_headers' => ListView::render('components/table-header', $tableHeaders),
             'table_rows'    => ListView::render(
                 'components/table-row',
                 array_map(
                     fn($item) => [
                         'table_datas' =>  ListView::render(
                             'components/table-data',
-                            array_merge($renderDatas($item), [
-                                ['data' => View::render('components/button', [
-                                    'content' => 'Remover',
-                                    'class' => 'btn-sm btn-error',
-                                    'onclick' => "
-                                        if (confirm('Deseja excluir?')) {
-                                            const tr = this.closest('tr');
-                                            const id = '" . $item->getId() . "';
-                                            fetch(window.location.href + '?id=' + id, { method: 'DELETE' })
-                                            .then(res => {
-                                                if (res.ok) return tr.remove();
-
-                                                if (res.status < 500) {
-                                                    return res.text().then(msg => alert(msg));
-                                                }
-
-                                                alert('Erro ao excluir no servidor.');
-                                            });
-                                        }
-                                    ",
-                                ])],
-                            ]),
+                            $renderDatas($item),
                         ) 
                     ],
                     $tableItems
