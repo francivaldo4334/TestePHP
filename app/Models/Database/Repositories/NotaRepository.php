@@ -34,4 +34,11 @@ class NotaRepository implements RepositoryInterface {
         $sql = $this->db->getScritpSql('notas/delete');
         $this->db->delete($sql, [':id' => $id]);
     }    
+    /**
+    *@return Array<NotaEntity>
+    **/
+    public function listByAlunoId($alunoId): array{
+        $sql = $this->db->getScritpSql('notas/select_by_aluno_id');
+        return $this->db->select($sql,[':aluno_id'=>$alunoId], NotaEntity::class);
+    }
 }
