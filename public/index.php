@@ -17,5 +17,6 @@ $router->registerCrud('/notas', NotasController::class);
 
 $router->get('/reports/pdf', DashboardController::toRouter('generateReportPdf'));
 $router->get('/reports/docx', DashboardController::toRouter('generateReportDocx'));
+$router->get('/reports/xlsx', DashboardController::toRouter('generateReportXlsx'));
 
 $router->run();

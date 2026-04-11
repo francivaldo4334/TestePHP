@@ -22,6 +22,12 @@ class DashboardView extends View {
                     'class'=>'btn',
                     'content'=>'Gerar Relatório/DOCX'
                 ],
+                [
+                    'href'=>'reports/xlsx',
+                    'download'=>'relatorio.xlsx',
+                    'class'=>'btn',
+                    'content'=>'Gerar Relatório/XLSX'
+                ],
             ]),
             'table'=>TableView::render(
                 [
@@ -30,7 +36,7 @@ class DashboardView extends View {
                     ['title' => 'Disciplina'],
                     ['title' => 'Nota'],
                     ['title' => 'Dt/Lancamento'],
-                    ['title' => 'Media'],
+                    ['title' => 'Média'],
                 ],
                 $items,
                 fn(DashboardProxy $item) => [

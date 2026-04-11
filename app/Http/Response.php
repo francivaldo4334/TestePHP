@@ -43,6 +43,9 @@ class Response {
             case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
                 echo $this->content;
                 exit;
+            case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                echo $this->content;
+                exit;
         }
     }
 }

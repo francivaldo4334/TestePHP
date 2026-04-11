@@ -10,6 +10,7 @@ use App\Models\Database\Repositories\TurmaRepository;
 use App\Models\Entities\AlunoEntity;
 use App\Utils\DocxGenerator;
 use App\Utils\PdfGenerator;
+use App\Utils\XlsxGenerator;
 use App\Views\DashboardView;
 use App\Views\ReportDocxView;
 use App\Views\ReportPdfView;
@@ -28,6 +29,31 @@ class DashboardController extends Controller {
     private function renderPage($items, $params){
         $turmas = $this->repositoryTurmas->list();
         return new Response(DashboardView::render('', $items, $turmas, $params));
+    }
+    public function generateReportXlsx(Request $request): Response {
+        $notas = $this->repository->list();
+        $headers = ['Aluno', 'Turma', 'Disciplina', 'Dt/Lancamento', 'Média'];
+        $rows = [];
+
+        foreach($notas as $nota) {
+            $rows[] = [
+                $nota->getNomeDoAluno(),
+                $nota->getNomeDaTurma(),
+                $nota->getDisciplina(),
+                $nota->getDataLancamento(),
+                $nota->getMediaDoAluno(),  
+            ];
+        }
+
+        $xlsxGenerator = new XlsxGenerator();
+        $xlsx = $xlsxGenerator->generateXlsx($headers, $rows);
+
+        $response = new Response($xlsx);
+
+        $response->setContentType('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $response->addHeader('Content-Disposition', 'attachment; filename="relatorio.xlsx"');
+        $response->addHeader('Cache-Control', 'max-age=0');
+        return $response;
     }
     public function generateReportDocx(Request $request): Response {
         $notas = $this->repository->list();
