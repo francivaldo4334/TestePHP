@@ -1,8 +1,8 @@
 <section>
-<div style="display: flex; justify-content: end;">
-  {{btn_create}}
-</div>
-{{list_content}}
+    <div style="display: flex; justify-content: end;">
+        {{btn_create}}
+    </div>
+    {{list_content}}
 </section>
 <dialog id="id_modal_create" class="modal" style="
     margin: auto; 
@@ -12,3 +12,13 @@
 ">
     {{form_create_content}}
 </dialog>
+<script>
+    document.querySelector('#id_modal_create form').onsubmit = async (e) => {
+        e.preventDefault();
+        await fetch(e.target.action, {
+            method: 'POST',
+            body: new FormData(e.target)
+        });
+        window.location.reload();
+    };
+</script>
