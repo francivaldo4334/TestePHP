@@ -5,18 +5,22 @@ namespace App\Controllers;
 use App\Http\Request;
 use App\Http\Response;
 use App\Models\Database\Repositories\AlunoRepository;
+use App\Models\Database\Repositories\TurmaRepository;
 use App\Models\Entities\AlunoEntity;
 use App\Views\AlunosView;
 
 class AlunosController extends CrudController {
     private AlunoRepository $repository;
+    private TurmaRepository $repositoryTurmas;
     public function __construct()
     {
         $this->repository = new AlunoRepository();
+        $this->repositoryTurmas = new TurmaRepository();
     }
     private function rendePage(){
         $alunos = $this->repository->list();
-        return AlunosView::render('', $alunos);
+        $turmas = $this->repositoryTurmas->list();
+        return AlunosView::render('', $alunos, $turmas);
     }
     public function get(Request $request): Response
     {
@@ -26,7 +30,7 @@ class AlunosController extends CrudController {
     {
         $body = $request->getBody();
         $model = new AlunoEntity();
-        $model->setNome($body['nome']);
+        $model->setNome($body['name']);
         $model->setEmail($body['email']);
         $model->setTurmaId($body['turma_id']);
 
@@ -36,6 +40,9 @@ class AlunosController extends CrudController {
     }
     public function delete(Request $request): Response
     {
-    	return new Response($this->rendePage());
+        $params = $request->getParams();
+        $id = $params['id'];
+        $this->repository->delete($id);
+    	return new Response("Ok", 204);
     }
 }

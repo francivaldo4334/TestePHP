@@ -8,7 +8,7 @@ class AlunosView extends View {
     /**
     * @param array<AlunoEntity> $items
     **/
-    public static function render($view, $items = []) {
+    public static function render($view, $items = [], $turmas = []) {
 
         return SidebarLayoutView::render('layouts/crud', [
             'btn_create'=> View::render('components/button', [
@@ -53,13 +53,16 @@ class AlunosView extends View {
                    [
                       'label' => "Turma",
                       'name' => "turma_id",
-                      'options' => ListView::render('components/option', [
+                      'options' => ListView::render('components/option', array_merge([
                               [
                                   'label' => "Selecione um item",
                                   'value' => '',
                                   'attrs' => "selected"
                               ]
-                      ]),
+                      ], array_map(fn($it)=>[
+                          'label' => $it->getNome(),
+                          'value' => $it->getId(),
+                      ], $turmas))),
                       'attrs' => 'required',
                    ] 
                 ],

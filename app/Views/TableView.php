@@ -26,7 +26,15 @@ class TableView extends View {
                                             const tr = this.closest('tr');
                                             const id = '" . $item->getId() . "';
                                             fetch(window.location.href + '?id=' + id, { method: 'DELETE' })
-                                            .then(res => res.ok ? tr.remove() : alert('Erro ao excluir no servidor.'));
+                                            .then(res => {
+                                                if (res.ok) return tr.remove();
+
+                                                if (res.status < 500) {
+                                                    return res.text().then(msg => alert(msg));
+                                                }
+
+                                                alert('Erro ao excluir no servidor.');
+                                            });
                                         }
                                     ",
                                 ])],

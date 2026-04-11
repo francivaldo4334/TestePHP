@@ -2,6 +2,7 @@
 
 namespace App\Models\Database;
 
+use Exception;
 use PDO;
 use PDOException;
 
@@ -42,8 +43,15 @@ class Database
     }
     public function delete($sql, $params = [])
     {
-        $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute($params);
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute($params);
+        } catch(\PDOException $e) {
+            if ($e->getCode() == '23000') {
+                throw new Exception("Não é possível excluir este item pois existem referencias utilizando ele.", 409);
+            }
+            throw $e;
+        }
     }
     public function getScritpSql($path){        
        $file = __DIR__.'/../../../scripts/sql/'.$path.'.sql'; 
