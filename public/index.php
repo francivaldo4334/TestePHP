@@ -15,4 +15,6 @@ $router->registerCrud('/alunos', AlunosController::class);
 $router->registerCrud('/turmas', TurmasController::class);
 $router->registerCrud('/notas', NotasController::class);
 
+$router->get('/reports/pdf', DashboardController::toRouter('generateReportPdf'));
+
 $router->run();

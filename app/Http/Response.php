@@ -37,6 +37,9 @@ class Response {
             case 'text/html':
                 echo $this->content;
                 exit;
+            case 'application/pdf':
+                echo $this->content;
+                exit;
         }
     }
 }

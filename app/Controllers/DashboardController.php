@@ -8,7 +8,9 @@ use App\Models\Database\Repositories\AlunoRepository;
 use App\Models\Database\Repositories\DashboardRepository;
 use App\Models\Database\Repositories\TurmaRepository;
 use App\Models\Entities\AlunoEntity;
+use App\Utils\PdfGenerator;
 use App\Views\DashboardView;
+use App\Views\View;
 
 class DashboardController extends Controller {
     private DashboardRepository $repository;
@@ -23,6 +25,16 @@ class DashboardController extends Controller {
     private function renderPage($items, $params){
         $turmas = $this->repositoryTurmas->list();
         return new Response(DashboardView::render('', $items, $turmas, $params));
+    }
+    public function generateReportPdf(Request $request): Response {
+        $pdfGenerator = new PdfGenerator();
+        $html = View::render('report_templates/report', []);
+        $pdf = $pdfGenerator->generateByHtml($html);
+        if(ob_get_length())ob_clean();
+        $response = new Response($pdf); 
+        $response->setContentType('application/pdf');
+        $response->addHeader('Content-Disposition', 'attachment; filename="relatorio.pdf"');
+        return $response;
     }
     public function entry(Request $request): Response
     {

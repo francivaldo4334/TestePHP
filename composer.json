@@ -12,5 +12,9 @@
       "email": "francivaldodev@gmail.com"
     }
   ],
-  "require": {}
+  "require": {
+    "knplabs/knp-snappy": "^1.6",
+    "h4cc/wkhtmltopdf-amd64": "0.12.x",
+    "h4cc/wkhtmltoimage-amd64": "0.12.x"
+  }
 }
