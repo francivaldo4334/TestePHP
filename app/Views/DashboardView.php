@@ -26,7 +26,7 @@ class DashboardView extends View {
                     'href'=>'reports/xlsx',
                     'download'=>'relatorio.xlsx',
                     'class'=>'btn',
-                    'content'=>'Gerar Relatório/XLSX'
+                    'content'=>'Exportar para EXEL'
                 ],
             ]),
             'table'=>TableView::render(
