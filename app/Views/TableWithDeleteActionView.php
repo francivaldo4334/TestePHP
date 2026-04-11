@@ -3,7 +3,7 @@
 namespace App\Views;
 
 class TableWithDeleteActionView extends TableView {
-    public static function render($tableHeaders = [], $tableItems = [], $renderDatas = null)
+    public static function render($tableHeaders = [], $tableItems = [], $renderDatas = null, $style='')
     {
         return parent::render(
             array_merge($tableHeaders, [['title'=>'Ações']]),
@@ -32,6 +32,7 @@ class TableWithDeleteActionView extends TableView {
                     ])
                 ]
             ]),
+            $style,
         );
     }
 }
