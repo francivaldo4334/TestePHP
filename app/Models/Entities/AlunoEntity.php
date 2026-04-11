@@ -3,6 +3,7 @@
 namespace App\Models\Entities;
 
 use App\Models\Database\Repositories\TurmaRepository;
+use App\Utils\CalcMedia;
 
 class AlunoEntity {
     private ?int $id;
@@ -47,5 +48,9 @@ class AlunoEntity {
         $turma = $repo->getById($this->getTurmaId());
         if (!$turma) return "";
         return $turma->getNome();
+    }
+    public function getMediaDoAluno(){
+        $calcmedia = new CalcMedia();
+        return $calcmedia->getMediaDoAluno($this->getId());
     }
 }

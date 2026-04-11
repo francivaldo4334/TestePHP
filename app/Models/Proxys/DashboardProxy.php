@@ -3,9 +3,8 @@
 namespace App\Models\Proxys;
 
 use App\Models\Database\Repositories\AlunoRepository;
-use App\Models\Database\Repositories\NotaRepository;
 use App\Models\Entities\AlunoEntity;
-use App\Models\Entities\NotaEntity;
+use App\Utils\CalcMedia;
 
 class DashboardProxy {
 
@@ -40,17 +39,7 @@ class DashboardProxy {
         return $aluno->getNome();
     }
     public function getMediaDoAluno(){
-        $repo = new NotaRepository();
-        $notas = $repo->listByAlunoId($this->aluno_id);
-
-        $soma = 0;
-        $quantidade = count($notas);
-
-        foreach($notas as $nota) {
-            $soma += $nota->getNota() ?? 0;
-        }
-
-        $media = $soma / $quantidade;
-        return $media;
+        $calcmedia = new CalcMedia();
+        return $calcmedia->getMediaDoAluno($this->aluno_id);
     }
 }

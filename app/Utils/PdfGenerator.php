@@ -14,7 +14,9 @@ class PdfGenerator {
     public function generateByHtml($html){
         try {
             if (!$this->snappy) throw new Exception("snappy não inicializado.", 500);
-            return $this->snappy->getOutputFromHtml($html);
+            $pdf = $this->snappy->getOutputFromHtml($html);
+            if(ob_get_length())ob_clean();
+            return $pdf;
         } catch(\Exception $e) {
             echo $e->getMessage();
         }

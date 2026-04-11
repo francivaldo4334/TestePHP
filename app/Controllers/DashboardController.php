@@ -10,12 +10,13 @@ use App\Models\Database\Repositories\TurmaRepository;
 use App\Models\Entities\AlunoEntity;
 use App\Utils\PdfGenerator;
 use App\Views\DashboardView;
-use App\Views\View;
+use App\Views\ReportPdfView;
 
 class DashboardController extends Controller {
     private DashboardRepository $repository;
     private TurmaRepository $repositoryTurmas;
     private AlunoRepository $repositoryAlunos;
+
     public function __construct()
     {
         $this->repository = new DashboardRepository();
@@ -27,11 +28,13 @@ class DashboardController extends Controller {
         return new Response(DashboardView::render('', $items, $turmas, $params));
     }
     public function generateReportPdf(Request $request): Response {
+        $notas = $this->repository->list();
+        $alunos = $this->repositoryAlunos->list();
+        $html = ReportPdfView::render($notas, $alunos);
+
         $pdfGenerator = new PdfGenerator();
-        $html = View::render('report_templates/report', []);
         $pdf = $pdfGenerator->generateByHtml($html);
-        if(ob_get_length())ob_clean();
-        $response = new Response($pdf); 
+        $response = new Response($pdf);
         $response->setContentType('application/pdf');
         $response->addHeader('Content-Disposition', 'attachment; filename="relatorio.pdf"');
         return $response;
