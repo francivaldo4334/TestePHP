@@ -14,6 +14,7 @@ class Database
     {
         $c = require_once __DIR__ . '/../../../config/database.php';
         $dsn = "{$c['driver']}:host={$c['host']};dbname={$c['database']};charset={$c['charset']}";
+
         $this->pdo = new PDO($dsn, $c['username'], $c['password'], $c['options']);
 
         $createTablesSchema = $this->getScritpSql('schema');
@@ -34,7 +35,24 @@ class Database
     {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute($params);
-        return $stmt->fetchAll(PDO::FETCH_CLASS, $entityClass);
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, $entityClass);
+    }
+    public function selectFirst($sql, $params = [], $entityClass = null): ?object
+    {
+        $stmt = $this->pdo->prepare($sql);
+        foreach ($params as $key => $value) {
+            $type = match (gettype($value)) {
+                'integer' => \PDO::PARAM_INT,
+                'boolean' => \PDO::PARAM_BOOL,
+                'NULL'    => \PDO::PARAM_NULL,
+                default   => \PDO::PARAM_STR,
+            };        
+            $stmt->bindValue($key, $value, $type);
+        }
+        $stmt->execute();
+        $stmt->setFetchMode(\PDO::FETCH_CLASS, $entityClass);
+        $result = $stmt->fetch();
+        return $result ?: null;
     }
     public function insert($sql, $model): mixed
     {

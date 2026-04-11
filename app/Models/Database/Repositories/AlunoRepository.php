@@ -6,9 +6,9 @@ use App\Models\Database\Database;
 use App\Models\Entities\AlunoEntity;
 
 /**
-* @implements RepositoryInterface<AlunoEntity>
+* @implements RepositoryInterface<AlunoEntity>,RepositoryDetailInterface<AlunoEntity>
 **/
-class AlunoRepository implements RepositoryInterface{
+class AlunoRepository implements RepositoryInterface, RepositoryDetailInterface{
     private Database $db;
     public function __construct()
     {
@@ -32,5 +32,10 @@ class AlunoRepository implements RepositoryInterface{
     {
         $sql = $this->db->getScritpSql('alunos/delete');
         $this->db->delete($sql, [':id' => $id]);
+    }
+    public function getById($id): ?object
+    {
+        $sql = $this->db->getScritpSql('alunos/select_by_id');
+        return $this->db->selectFirst($sql, [':id' => $id], AlunoEntity::class);
     }
 }

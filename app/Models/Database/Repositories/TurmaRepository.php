@@ -6,9 +6,9 @@ use App\Models\Database\Database;
 use App\Models\Entities\TurmaEntity;
 
 /**
-* @implements RepositoryInterface<TurmaEntity>
+* @implements RepositoryInterface<TurmaEntity>,RepositoryDetailInterface<TurmaEntity>
 **/
-class TurmaRepository implements RepositoryInterface {
+class TurmaRepository implements RepositoryInterface, RepositoryDetailInterface {
     private Database $db;
     public function __construct()
     {
@@ -31,5 +31,13 @@ class TurmaRepository implements RepositoryInterface {
     {
         $sql = $this->db->getScritpSql('turmas/delete');
         $this->db->delete($sql, [':id' => $id]);
-    }    
+    }
+    /**
+    * @return TurmaEntity
+    **/
+    public function getById($id): ?object
+    {
+        $sql = $this->db->getScritpSql('turmas/select_by_id');
+        return $this->db->selectFirst($sql, [':id' => $id], TurmaEntity::class);
+    }
 }

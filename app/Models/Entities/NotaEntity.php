@@ -1,6 +1,8 @@
 <?php
 namespace App\Models\Entities;
 
+use App\Models\Database\Repositories\AlunoRepository;
+
 class NotaEntity {
     private ?int $id;
     private int $aluno_id;
@@ -39,6 +41,9 @@ class NotaEntity {
         $this->disciplina = $disciplina;
     }
     public function getNomeDoAluno(){
-        return "Implement"; //TODO:
+        $repo = new AlunoRepository();
+        $aluno = $repo->getById($this->getAlunoId());
+        if (!$aluno) return "";
+        return $aluno->getNome();
     }
 }

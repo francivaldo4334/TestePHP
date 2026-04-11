@@ -2,6 +2,8 @@
 
 namespace App\Models\Entities;
 
+use App\Models\Database\Repositories\TurmaRepository;
+
 class AlunoEntity {
     private ?int $id;
     private string $nome;
@@ -41,6 +43,9 @@ class AlunoEntity {
         return $this->criado_em;
     }
     public function getNomeDaTurma() {
-        return "";//TODO: implement
+        $repo = new TurmaRepository();
+        $turma = $repo->getById($this->getTurmaId());
+        if (!$turma) return "";
+        return $turma->getNome();
     }
 }
