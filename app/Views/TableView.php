@@ -6,10 +6,12 @@ class TableView extends View {
     public static function render(
         $tableHeaders = [],
         $tableItems = [],
-        $renderDatas = null
+        $renderDatas = null,
+        $style = '',
     ) {
         $renderDatas = $renderDatas ?? fn($item) => [];
         return parent::render('components/table', [
+            'style'=>$style,
             'table_headers' => ListView::render('components/table-header', $tableHeaders),
             'table_rows'    => ListView::render(
                 'components/table-row',

@@ -23,7 +23,8 @@ class ReportPdfView extends View {
                     ['data'=>$item->getNomeDoAluno()],
                     ['data'=>$item->getDataLancamento()],
                     ['data'=>$item->getNota()],
-                ]
+                ],
+                'width:100%'
             ),
             'table_media_aluno'=> TableView::render(
                 [
@@ -34,7 +35,8 @@ class ReportPdfView extends View {
                 fn(AlunoEntity $item)=>[
                     ['data' => $item->getNome()],
                     ['data' => $item->getMediaDoAluno()],
-                ]
+                ],
+                'width:100%'
             ),
         ]);
     }
