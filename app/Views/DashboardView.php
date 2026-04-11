@@ -9,6 +9,14 @@ class DashboardView extends View {
     public static function render($view, $items = [], $turmas = [], $params = [])
     {
         return SidebarLayoutView::render('layouts/dashboard', [
+            'actions'=>ListView::render('components/a', [
+                [
+                    'href'=>'reports/pdf',
+                    'download'=>'relatorio.pdf',
+                    'class'=>'btn',
+                    'content'=>'Gerar Relatório/PDF'
+                ]
+            ]),
             'table'=>TableView::render(
                 [
                     ['title' => 'Aluno'],
@@ -17,7 +25,6 @@ class DashboardView extends View {
                     ['title' => 'Nota'],
                     ['title' => 'Dt/Lancamento'],
                     ['title' => 'Media'],
-                    ['title' => 'Ações'],
                 ],
                 $items,
                 fn(DashboardProxy $item) => [
@@ -27,7 +34,6 @@ class DashboardView extends View {
                     ['data'=>$item->getNota()],
                     ['data'=>$item->getDataLancamento()],
                     ['data'=>$item->getMediaDoAluno()],
-                    ['data'=>"ações"],
                 ],
             ),
             'filters'=>ListView::render('components/label', [

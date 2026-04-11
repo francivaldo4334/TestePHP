@@ -1,9 +1,14 @@
-<div>
+<div style="display: flex; flex-direction: column; gap: 1rem;">
     <form action="/" style="display: flex; gap: 1rem; align-items: end;">
         {{filters}}
         <button class="btn" type="submit">
             Aplicar filtros
         </button>
     </form>
+    <hr>
+    <div style="display: flex; gap: 1rem;">
+        {{actions}}
+    </div>
+    <hr>
     {{table}}
 </div>
