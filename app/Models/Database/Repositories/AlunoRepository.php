@@ -38,4 +38,8 @@ class AlunoRepository implements RepositoryInterface, RepositoryDetailInterface{
         $sql = $this->db->getScritpSql('alunos/select_by_id');
         return $this->db->selectFirst($sql, [':id' => $id], AlunoEntity::class);
     }
+    public function listByTurmaId($turmaId):array {
+        $sql = $this->db->getScritpSql('alunos/select_by_turma_id');
+        return $this->db->select($sql,['turma_id'=>$turmaId], AlunoEntity::class);
+    }
 }

@@ -1,0 +1,1 @@
+SELECT * FROM notas WHERE 1=1
